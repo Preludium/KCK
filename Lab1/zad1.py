@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -20,7 +18,7 @@ def main():
         del df['effort']
         avgs.append((df.values[-1] * 100).tolist())
         mean = (df.mean(axis=1)*100).tolist()
-        ax[0].plot(x_axis, mean, label=key, marker=value, markevery=25)
+        ax[0].plot(x_axis, mean, label=key, marker=value, markevery=25, markeredgecolor='black')
 
     ax2 = ax[0].twiny()
     ax2.set_xlabel("Pokolenie")
@@ -38,7 +36,7 @@ def main():
     ax[0].grid(linestyle='-', linewidth=0.5)
     ax[0].set_ylabel("Odsetek wygranych gier [%]")
     ax[0].set_xlabel("Rozegranych gier (x 1000)")
-    ax[0].legend(loc='lower right')
+    ax[0].legend(loc='lower right', numpoints=2)
     plt.savefig('zad1.pdf')
     plt.show()
 
