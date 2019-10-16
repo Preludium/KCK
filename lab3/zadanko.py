@@ -49,21 +49,69 @@ def gradient_rgb_bw(v):
 
 
 def gradient_rgb_gbr(v):
-    return (0, 0, 0)
+    if (v < 0.5):
+        r = 0
+        g = 1 - 2 * v
+        b = 2 * v
+    else:
+        r = 2 * v - 1
+        g = 0
+        b = 2 - 2 * v
+    return (r, g, b)
 
 def gradient_rgb_gbr_full(v):
-    #TODO
-    return (0, 0, 0)
-
+    if (v < 0.25):
+        r = 0
+        g = 1   
+        b = 4 * v
+    elif (v < 0.5):
+        r = 0
+        g = 2 - 4 * v
+        b = 1
+    elif (v < 0.75):
+        r = 4 * v - 2
+        g = 0
+        b = 1
+    else:
+        r = 1
+        g = 0
+        b = 4 - 4 * v
+    return (r, g, b)
 
 def gradient_rgb_wb_custom(v):
-    #TODO
-    return (0, 0, 0)
+    if (v < 0.14):
+        r = 1
+        g = 1 - v * 7
+        b = 1
+    elif (v < 0.28):
+        r = 1 - (v - 0.14) * 7
+        g = 0
+        b = 1
+    elif (v < 0.42):
+        r = 0
+        g = (v - 0.28) * 7
+        b = 1
+    elif (v < 0.56):
+        r = 0
+        g = 1
+        b = 1 - (v - 0.42) * 7
+    elif (v < 0.7):
+        r = (v - 0.56) * 7
+        g = 1
+        b = 0
+    elif (v < 0.84):
+        r = 1
+        g = 1 - (v - 0.7) * 7
+        b = 0    
+    else:
+        r = 1 - (v - 0.84) * 6.2
+        g = 0
+        b = 0
+    return (r, g, b)
 
 
 def gradient_hsv_bw(v):
-    #TODO
-    return hsv2rgb(0, 0, 0)
+    return hsv2rgb(v, v, v)
 
 
 def gradient_hsv_gbr(v):
