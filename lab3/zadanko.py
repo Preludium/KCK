@@ -114,9 +114,24 @@ def gradient_hsv_bw(v):
     return hsv2rgb(v, v, v)
 
 
-def gradient_hsv_gbr(v):
-    #TODO
-    return hsv2rgb(0, 0, 0)
+def gradient_hsv_gbr(i):
+    if (i < 0.25):
+        h = 90 / 360 + i
+        s = 1   
+        v = 1
+    elif (i < 0.5):
+        h = 0
+        s = 2 - 4 * i
+        v = 1
+    elif (i < 0.75):
+        h = 4 * i - 2
+        s = 0
+        v = 1
+    else:
+        h = 4 * i - 3 #(301/360 + (i - 0.75)) % 1
+        s = 0 
+        v = 1
+    return (h, s, v)    
 
 def gradient_hsv_unknown(v):
     #TODO
