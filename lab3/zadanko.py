@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # from __future__ import division             # Division in Python 2.7
 import matplotlib
-matplotlib.use('Agg')                       # So that we can render files without GUI
+# matplotlib.use('Agg')                       # So that we can render files without GUI
 import matplotlib.pyplot as plt
 from matplotlib import rc
 import numpy as np
@@ -38,10 +38,10 @@ def plot_color_gradients(gradients, names):
         y_text = pos[1] + pos[3]/2.
         fig.text(x_text, y_text, name, va='center', ha='left', fontsize=10)
 
-    fig.savefig('my-gradients.pdf')
+    plt.show()
+    # fig.savefig('my-gradients.pdf')
 
 def hsv2rgb(h, s, v):
-    #TODO
     return (h, s, v)
 
 def gradient_rgb_bw(v):
@@ -133,13 +133,20 @@ def gradient_hsv_gbr(i):
         v = 1
     return (h, s, v)    
 
+    #sprawdzic! 
+    #       H
+    # yel 1/6
+    # green 1/3
+    # cyan 1/2
+    # blue 2/3
+    # viol 5/6
+    # red 0
+
 def gradient_hsv_unknown(v):
-    #TODO
     return hsv2rgb(0, 0, 0)
 
 
 def gradient_hsv_custom(v):
-    #TODO
     return hsv2rgb(0, 0, 0)
 
 
