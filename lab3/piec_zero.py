@@ -1,34 +1,51 @@
+import matplotlib
+import colorsys
 from matplotlib import pyplot as plt
+from matplotlib import colors
+
 
 def main():
+    pomap = []
     map = []
+    min_val = 0.432528741577922
+    max_val = 1.5383204012924698
     with open('dane.txt', 'r') as f:
         w, h, d = f.readline().split()
 
-        j = 0
         for line in f:
-            splitline = line.split()
-            pomap = []
-            for i in range(len(splitline)):
-                pomap[j][i].append(float(splitline[i]))
-                pomap[j][i] = get_changed_gradient(pomap[j][i])
-            j += 1
-            map.append(pomap)
-                
+            pom = []
+            for item in line.split():
+                pom.append((float(item) / 100 - min_val) / (max_val - min_val))
+            pomap.append(pom)
+
+        for i in pomap:
+            pom = []
+            for j in i:
+                pom.append(get_gradient(j))
+            map.append(pom)
 
     plt.imshow(map)
     plt.show()            
 
-def get_changed_gradient(v):
-    if (v < 0.5):
-        r = 0
-        g = 1
-        b = 1 - (v - 0.42) * 7
-    else:
-        r = (v - 0.56) * 7
-        g = 1
-        b = 0
-    return (r, g, b)
+
+def hsv2rgb(h, s, v):
+    return (h, s, v)
+
+
+def get_gradient(i):
+    if (i < 9/32):   # ziel
+        h = i * 2.5
+        s = 1
+        v = 0
+    elif (i < 1 / 2): # zolty
+        h = 0.2 + i * 1.5
+        s = 1
+        v = 0 
+    else:           # czerwony
+        h = 1
+        s = 1 - (i - 1/2) * 2 
+        v = 0
+    return hsv2rgb(h, s, v)
 
 if (__name__ == '__main__'):
     main()

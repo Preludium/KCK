@@ -39,10 +39,12 @@ def plot_color_gradients(gradients, names):
         fig.text(x_text, y_text, name, va='center', ha='left', fontsize=10)
 
     plt.show()
-    # fig.savefig('my-gradients.pdf')
+    fig.savefig('my-gradients.pdf')
+
 
 def hsv2rgb(h, s, v):
     return (h, s, v)
+
 
 def gradient_rgb_bw(v):
     return (v, v, v)
@@ -58,6 +60,7 @@ def gradient_rgb_gbr(v):
         g = 0
         b = 2 - 2 * v
     return (r, g, b)
+
 
 def gradient_rgb_gbr_full(v):
     if (v < 0.25):
@@ -77,6 +80,7 @@ def gradient_rgb_gbr_full(v):
         g = 0
         b = 4 - 4 * v
     return (r, g, b)
+
 
 def gradient_rgb_wb_custom(v):
     if (v < 0.14):
@@ -116,9 +120,9 @@ def gradient_hsv_bw(v):
 
 def gradient_hsv_gbr(i):
     if (i < 0.25):
-        h = 90 / 360 + i
-        s = 1   
-        v = 1
+        h = 0
+        s = 1
+        v = i * 4
     elif (i < 0.5):
         h = 0
         s = 2 - 4 * i
@@ -128,26 +132,50 @@ def gradient_hsv_gbr(i):
         s = 0
         v = 1
     else:
-        h = 4 * i - 3 #(301/360 + (i - 0.75)) % 1
-        s = 0 
+        h = 1
+        s = 0
+        v = 1 - (i - 0.75) * 4
+    return (h, s, v)  
+
+
+def gradient_hsv_unknown(i):
+    if (i < 0.5):
+        h = i * 2
+        s = 1
+        v = 0.5
+    else:
+        h = 1
+        s = 1 - (i - 0.5) 
+        v = 0.5
+    return hsv2rgb(h, s, v)
+
+
+def gradient_hsv_custom(i):
+    if (i < 0.15):
+        h = 1
+        s = 0 + i * 6.66
+        v = 0
+    elif (i < 0.3):
+        h = 1 - (i - 0.15) * 6
+        s = 1
+        v = 0
+    elif (i < 0.5):
+        h = 0
+        s = 1
+        v = (i - 0.3) * 5
+    elif (i < 0.7):
+        h = 0.3 + (i - 0.5)
+        s = 1 - (i - 0.5) * 2
+        v = 1   
+    elif (i < 0.85):
+        h = 0.5 + (i - 0.7) * 0.5/0.15 
+        s = 0.6 + (i - 0.7) * 0.2/0.15
+        v = 1    
+    else:
+        h = 1
+        s = 0.8 + (i - 0.85) * 0.2/0.15 
         v = 1
-    return (h, s, v)    
-
-    #sprawdzic! 
-    #       H
-    # yel 1/6
-    # green 1/3
-    # cyan 1/2
-    # blue 2/3
-    # viol 5/6
-    # red 0
-
-def gradient_hsv_unknown(v):
-    return hsv2rgb(0, 0, 0)
-
-
-def gradient_hsv_custom(v):
-    return hsv2rgb(0, 0, 0)
+    return hsv2rgb(h, s, v)
 
 
 if __name__ == '__main__':
