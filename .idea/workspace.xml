@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09e9a4c5-bd47-44fc-a96f-6428cc7a6cd6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/my-gradients.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/my-gradients.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/piec_zero.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/piec_zero.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/zadanko.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/zadanko.py" afterDir="false" />
-    </list>
+    <list default="true" id="09e9a4c5-bd47-44fc-a96f-6428cc7a6cd6" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +14,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="152" />
     <option name="y" value="17" />
-    <option name="width" value="1610" />
-    <option name="height" value="994" />
+    <option name="width" value="1460" />
+    <option name="height" value="980" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -59,9 +53,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="133" y="15" width="1405" height="867" extended-state="0" />
+    <frame x="152" y="17" width="1460" height="980" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25316456" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25710228" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />

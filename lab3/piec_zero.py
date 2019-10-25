@@ -21,7 +21,7 @@ def main():
                 shading = False
                 if (pomap[i][j-1] > pomap[i][j]):
                     shading = True
-                    dif = 1 - (pomap[i][j-1] - pomap[i][j]) * 5
+                    dif = 1 - (pomap[i][j-1] - pomap[i][j]) * 7
                 pom.append(get_gradient(pomap[i][j], shading, dif))
             map.append(pom)
 
@@ -29,33 +29,29 @@ def main():
     plt.show()            
 
 
-def hsv2rgb(h, s, v):
-    return (h, s, v)
-
-
 def get_gradient(i, shading, dif):
-    if (i < 9/32):   # ziel\
-        h = i * 2.5
-        s = 1
-        v = 0
+    if (i < 9/32):   # ziel
+        r = i * 2.5
+        g = 1
+        b = 0
         if (shading):
-            h = h * dif 
-            s = s * dif
+            r = r * dif 
+            g = g * dif
     elif (i < 1 / 2): # zolty
-        h = 0.2 + i * 1.5
-        s = 1
-        v = 0 
+        r = 0.2 + i * 1.5
+        g = 1
+        b = 0 
         if (shading):
-            h = h * dif
-            s = s * dif
+            r = r * dif
+            g = g * dif
     else:           # czerwony
-        s = 1 - (i - 1/2) * 2 
-        h = 1
-        v = 0
+        r = 1
+        g = 1 - (i - 1/2) * 2 
+        b = 0
         if (shading):
-            s = s * dif
-            h = h * dif
-    return hsv2rgb(h, s, v)
+            r = r * dif
+            g = g * dif
+    return (r, g, b)
 
 
 if (__name__ == '__main__'):

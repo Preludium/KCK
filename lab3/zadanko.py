@@ -44,7 +44,37 @@ def plot_color_gradients(gradients, names):
 
 
 def hsv2rgb(h, s, v):
-    return colors.hsv_to_rgb((h, s, v))
+    h = h * 360
+    c = s * v
+    ha = h / 60
+    x = c * (1 - abs(ha % 2 - 1))
+
+    if (ha <= 1):
+        r = c
+        g = x
+        b = 0
+    elif (ha <= 2):
+        r = x
+        g = c
+        b = 0
+    elif (ha <= 3):
+        r = 0
+        g = c
+        b = x
+    elif (ha <= 4):
+        r = 0
+        g = x
+        b = c
+    elif (ha <= 5):
+        r = x
+        g = 0
+        b = c
+    else:
+        r = c
+        g = 0
+        b = x
+    m = v - c
+    return (r + m, g + m, b + m)
 
 
 def gradient_rgb_bw(v):
@@ -116,67 +146,19 @@ def gradient_rgb_wb_custom(v):
 
 
 def gradient_hsv_bw(v):
-    return hsv2rgb(v, v, v)
+    return hsv2rgb(0, 0, v)
 
 
 def gradient_hsv_gbr(i):
-    if (i < 0.25):
-    #     h = 0
-    #     s = 1
-    #     v = i * 4
-    # elif (i < 0.5):
-    #     h = 0
-    #     s = 2 - 4 * i
-    #     v = 1
-    # elif (i < 0.75):
-    #     h = 4 * i - 2
-    #     s = 0
-    #     v = 1
-    # else:
-    #     h = 1
-    #     s = 0
-    #     v = 1 - (i - 0.75) * 4
     return hsv2rgb(1/3 + i * 2/3, 1, 1)  
 
 
 def gradient_hsv_unknown(i):
-    # if (i < 0.5):
-    #     h = i * 2
-    #     s = 1
-    #     v = 0.5
-    # else:
-    #     h = 1
-    #     s = 1 - (i - 0.5) 
-    #     v = 0.5
     return hsv2rgb(1/3 - i * 1/3, 0.5, 1)
 
 
 def gradient_hsv_custom(i):
-    # if (i < 0.15):
-    #     h = 1
-    #     s = 0 + i * 6.66
-    #     v = 0
-    # elif (i < 0.3):
-    #     h = 1 - (i - 0.15) * 6
-    #     s = 1
-    #     v = 0
-    # elif (i < 0.5):
-    #     h = 0
-    #     s = 1
-    #     v = (i - 0.3) * 5
-    # elif (i < 0.7):
-    #     h = 0.3 + (i - 0.5)
-    #     s = 1 - (i - 0.5) * 2
-    #     v = 1   
-    # elif (i < 0.85):
-    #     h = 0.5 + (i - 0.7) * 0.5/0.15 
-    #     s = 0.6 + (i - 0.7) * 0.2/0.15
-    #     v = 1    
-    # else:
-    #     h = 1
-    #     s = 0.8 + (i - 0.85) * 0.2/0.15 
-    #     v = 1
-    return hsv2rgb(sin(i), 1, 1)
+    return hsv2rgb(sin(i), 1 - i, 1)
 
 
 if __name__ == '__main__':
