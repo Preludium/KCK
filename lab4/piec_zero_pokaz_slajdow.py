@@ -17,9 +17,7 @@ def main():
         # print('{}'.format(os.path.join(os.getcwd(), 'images', file)))
         files.append('{}'.format(os.path.join(os.getcwd(), 'images', file)))
 
-    fig, axs = plt.subplots(3, 6)
-
-    for (f, i, ax) in zip(files, range(18), axs.ravel()):
+    for (f, i) in zip(files, range(18)):
         
         # Read image
         im = io.imread(f)
@@ -55,6 +53,7 @@ def main():
         contour = measure.find_contours(im_bin, 0.8)
         
         # Plot all contours found and add circle in the centre
+        fig, ax = plt.subplots()
         for n, c in enumerate(contour):
             if(len(c) > 100):
                 ax.add_artist(plt.Circle(centre(c[:, 1], c[:, 0]), radius=2, color='white'))
@@ -65,9 +64,9 @@ def main():
         ax.axis('image')
         ax.set_xticks([])
         ax.set_yticks([])
+        plt.show()
 
     fig.savefig("foo.pdf")
-    plt.show()
 
 def centre(x, y):
     x_med = np.mean(x)

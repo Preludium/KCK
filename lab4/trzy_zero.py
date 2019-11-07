@@ -25,7 +25,7 @@ def main():
         sigma = 2
 
         # find canny edges | for static sigma
-        edged = cv2.Canny(gray, 500, 200) 
+        # edged = cv2.Canny(gray, 500, 200) 
 
         # compute the median of the single channel pixel intensities
         v = np.median(gray)
