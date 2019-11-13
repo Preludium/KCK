@@ -27,6 +27,7 @@ def main():
 
         # Color conversion
         im_hed = rgb2hed(im)
+        # plt.imshow(im_hed)
 
         # Rescale colors to (0..1) and stack it to list
         h = exposure.rescale_intensity(im_hed[:, :, 0], out_range=(0, 1))
@@ -35,7 +36,7 @@ def main():
 
         # To grayscale
         gray = rgb2gray(zdh)
-        # plt.imshow(gray)
+        plt.imshow(gray)
 
         # Get factor of brightness threshold
         thresh = threshold_otsu(gray)

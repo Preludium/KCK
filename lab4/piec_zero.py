@@ -17,7 +17,7 @@ def main():
         # print('{}'.format(os.path.join(os.getcwd(), 'images', file)))
         files.append('{}'.format(os.path.join(os.getcwd(), 'images', file)))
 
-    fig, axs = plt.subplots(3, 6)
+    fig, axs = plt.subplots(3, 6)   
 
     for (f, i, ax) in zip(files, range(18), axs.ravel()):
         

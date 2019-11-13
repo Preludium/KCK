@@ -1,3 +1,9 @@
+import skimage
+from skimage import data, io, filters, exposure, feature, measure, morphology
+from skimage.filters import rank, threshold_otsu
+from skimage import img_as_float, img_as_ubyte
+from skimage.color import rgb2hsv, hsv2rgb, rgb2gray, rgb2hed
+from matplotlib import pylab as plt 
 import numpy as np
 from numpy import array
 from PIL import Image
@@ -12,53 +18,57 @@ def main():
         # print('{}'.format(os.path.join(os.getcwd(), 'images', file)))
         files.append('{}'.format(os.path.join(os.getcwd(), 'images', file)))
 
-    for (f, i) in zip(files, range(20)):
+    fig, axs = plt.subplots(2, 3)
+
+    black = Image.new('RGB', (400, 400), 'black')
+
+    for (f, i, ax) in zip(files, range(6), axs.ravel()):
         
-        im = cv2.imread(f)
-        im = cv2.medianBlur(im,5)
+        # Read image
+        im = io.imread(f)
 
-        # th2 = cv2.adaptiveThreshold(im,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
-        # th3 = cv2.adaptiveThreshold(im,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,11,2)
-        gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+        # Resize image
+        im = skimage.transform.resize(im, (400, 400), anti_aliasing=True)
 
-        # gray scale
-        sigma = 2
+        # Color conversion
+        im_hed = rgb2hed(im)
 
-        # find canny edges | for static sigma
-        # edged = cv2.Canny(gray, 500, 200) 
+        # Rescale colors to (0..1) and stack it to list
+        h = exposure.rescale_intensity(im_hed[:, :, 0], out_range=(0, 1))
+        d = exposure.rescale_intensity(im_hed[:, :, 2], out_range=(0, 1))
+        zdh = np.dstack((np.zeros_like(h), d, h))
 
-        # compute the median of the single channel pixel intensities
-        v = np.median(gray)
+        # To grayscale
+        gray = rgb2gray(zdh)
+        # plt.imshow(gray)
 
-        # apply automatic Canny edge detection using the computed median
-        lower = int(max(0, (1.0 - sigma) * v))
-        upper = int(min(255, (1.0 + sigma) * v))
-        edged = cv2.Canny(gray, lower, upper)
+        # Get factor of brightness threshold
+        thresh = threshold_otsu(gray)
 
-        # find contours | use copy of the canny edges couse find contours alters image 
-        contours, hierarchy = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # Transform to binary image 
+        im_bin = gray > thresh
 
-        # draw contours on black foreground
-        cv2.imshow('Canny Edges After Contouring', edged) 
-        # px, py = 400*(i%4), 400*int(i/5)
-        # cvs.paste(edged, (px, py))#, px + 400, py + 400))
+        # Apply dilatation
+        im_bin = morphology.dilation(im_bin, morphology.square(5))
+        
+        # Remove small objects 
+        im_bin = morphology.remove_small_objects(im_bin)
 
-        # draw color contours on original image
-        cv2.drawContours(im, contours, -1, (0, 255, 0), 3)   
-        cv2.imshow('{}'.format(f[-13:]), im) 
+        # Find contours
+        contour = measure.find_contours(im_bin, 0.8)
+        
+        # Plot all contours found and add circle in the centre
+        for n, c in enumerate(contour):
+            if(len(c) > 100):
+                ax.plot(c[:, 1], c[:, 0], linewidth=1, color='white')
 
-        if cv2.waitKey(0): 
-            cv2.destroyAllWindows() 
-        elif cv2.waitKey(9):
-            exit(0)
+        ax.imshow(black, interpolation='nearest', cmap=plt.cm.gray)
 
+        ax.axis('image')
+        ax.set_xticks([])
+        ax.set_yticks([])
 
-def resize(image):
-    print(image)
-    im = Image.open(image)
-    imResize = im.resize((400,400), Image.ANTIALIAS)
-    imResize.save(image + ' resized.jpg', 'JPEG', quality=90)
-
+    plt.show()
 
 if __name__ == '__main__':
     main()
