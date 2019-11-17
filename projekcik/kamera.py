@@ -4,10 +4,13 @@ import cv2
 
 cap = cv2.VideoCapture(0)
 
+cap.set(3, 1280)
+cap.set(4, 720)
+
 while(True):
     # Capture frame-by-frame
     ret, frame = cap.read()
-
+    # print(str(len(frame)) + " x " +str(len(frame[0])))
     # Our operations on the frame come here
     # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
