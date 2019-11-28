@@ -30,7 +30,7 @@ def detect(image):
  
 	# erosion and dilation for better contours searching
 	eroded = cv2.erode(region, None, iterations=4)
-	erodedDilated = cv2.dilate(eroded, None, iterations=15)
+	erodedDilated = cv2.dilate(eroded, None, iterations=4)
 	contours = cv2.findContours(erodedDilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	finalContours = imutils.grab_contours(contours)
  
