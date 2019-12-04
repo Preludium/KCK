@@ -1,7 +1,6 @@
 import numpy as np
 import cv2
 import imutils
-import os
  
 def detect(image):
 	# to grayscale
@@ -33,10 +32,11 @@ def detect(image):
 	erodedDilated = cv2.dilate(eroded, None, iterations=4)
 	contours = cv2.findContours(erodedDilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	finalContours = imutils.grab_contours(contours)
- 
+	
+
 	if len(finalContours) == 0:
 		return None
- 
+		
 	# get largest bounding box
 	c = sorted(finalContours, key=cv2.contourArea, reverse=True)[0]
 	rectangle = cv2.minAreaRect(c)
@@ -45,21 +45,3 @@ def detect(image):
  
 	# return barcode box
 	return box 
-
-
-if __name__ == "__main__":
-	# img = cv2.imread(str(os.getcwd()) + '\\fotki\\tel3.jpg')
-	# img.resize()
-	cap = cv2.VideoCapture(0)
-	cap.set(3, 1280)
-	cap.set(4, 720)
-	while True:
-		ret, img = cap.read()
-		box = detect(img)
-		# if box is not None:
-			# cv2.drawContours(img, [box], -1, (0, 255, 0), 2)
-		cv2.imshow("Image", box)
-		if cv2.waitKey(1) & 0xFF == ord('q'):
-			break
-	cap.release()
-	cv2.destroyAllWindows()
